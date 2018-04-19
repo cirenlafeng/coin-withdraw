@@ -36,6 +36,8 @@ class TaskController extends Controller
         if( $moneyCount >= 0.00054 || $postData['invited_num'] > 5 || $postData['money'] >= 0.00054 )
         {
             $postData['check_type'] = 2;//人工审核
+        }else{
+            $postData['check_type'] = 1;//自动审核
         }
         $postData['status'] = 0;
         $postData['create_time'] = time();
@@ -44,6 +46,7 @@ class TaskController extends Controller
         {
             return response()->json([
                 'status' => 200,
+                'check_type' => $postData['check_type'],
                 'data' => 'save success'
             ]);
         }else{
