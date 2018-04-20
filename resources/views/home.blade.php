@@ -43,6 +43,27 @@
                                 <div class="panel-heading">
                                     <div class="text-muted bootstrap-admin-box-title">列表</div>
                                 </div>
+<div class="bootstrap-admin-panel-content">
+<form action="" method="get">
+        申请类型：
+        <select id="check_type" name="check_type" >
+            <option value="off" @if(Request::input('check_type','off')=='off') selected @endif> - </option>
+            <option value="1" @if(Request::input('check_type')==1) selected @endif>自动</option>
+            <option value="2" @if(Request::input('check_type')==2) selected @endif>人工</option>
+        </select>
+        &nbsp;&nbsp;
+        申请状态：
+        <select id="status" name="status" >
+            <option value="off" @if(Request::input('status','off')=='off') selected @endif> - </option>
+            <option value="0" @if(null !==Request::input('status') && Request::input('status')=='0') selected @endif>待审核</option>
+            <option value="1" @if(Request::input('status')=='1') selected @endif>通过</option>
+            <option value="-1" @if(Request::input('status')== '-1') selected @endif>未通过</option>
+        </select>
+        &nbsp;&nbsp;
+        <input type="submit" name="" value="提交">
+</form>
+<br><br>
+</div>
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -58,8 +79,52 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach($taskList as $val)
+                                            <tr>
+                                                <td>{{ $val->id }}</td>
+                                                <td>{{ $val->area }}</td>
+                                                <td>{{ $val->phone }}</td>
+                                                <td>
+                                                    @if($val->check_type == 1)
+                                                    自动
+                                                    @endif
+                                                    @if($val->check_type == 2)
+                                                    人工
+                                                    @endif
+                                                </td>
+                                                <td>{{ rtrim(rtrim($val->money, '0'), '.') }}</td>
+                                                <td>
+                                                    @if($val->status == '0')
+                                                    待审核
+                                                    @endif
+                                                    @if($val->status == '1')
+                                                    通过
+                                                    @endif
+                                                    @if($val->status == '-1')
+                                                    未通过
+                                                    @endif
+                                                </td>
+                                                <td>{{ date('Y-m-d H:i:s',$val->create_time) }}</td>
+                                                <td>
+                                                    @if($val->check_time == 0)
+                                                    /
+                                                    @endif
+                                                    @if($val->check_time > 0)
+                                                    {{ date('Y-m-d H:i:s',$val->check_time) }}
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="/inviteInfo?area={{$val->area}}&phone={{$val->phone}}" target="_blank">邀请详情</a>
+                                                    &nbsp;&nbsp;
+                                                    <a href="/check/pass?id={{$val->id}}" style="color: green">通过</a>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <a href="/check/miss?id={{$val->id}}" style="color: red">拒绝</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
+                                    {{ $taskList->appends(Request::input())->links() }}
                                 </div>
                             </div>
                         </div>

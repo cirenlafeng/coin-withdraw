@@ -60,8 +60,11 @@
                                                 <td>{{$val->email}}</td>
                                                 <td>{{$val->created_at}}</td>
                                                 <td>
+                                                    @if($val->level == 99)
+                                                        超级管理员
+                                                    @endif
                                                     @if($val->level == 1)
-                                                        管理员
+                                                        审核员
                                                     @endif
                                                     @if($val->level == 0)
                                                         访客

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
+use DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $where = [];
+        $check_type = Request::input('check_type','off');
+        $status = Request::input('status','off');
+        if($check_type == 1 || $check_type == 2)
+        {
+            $where['check_type'] = $check_type;
+        }
+        if($status == '0' || $status == '1' || $status == '-1')
+        {
+            $where['status'] = $status;
+        }
+
+        $taskList = DB::table('task_list')->where($where)->orderBy('create_time')->orderBy('money','desc')->paginate(20);
+        return view('home',['taskList'=>$taskList]);
     }
 }

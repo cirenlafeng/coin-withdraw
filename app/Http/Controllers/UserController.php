@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        if(!(Auth::user()->level >= 1))
+        if(!(Auth::user()->level == 99))
         {
             exit('没有权限');
         }
@@ -45,7 +45,7 @@ class UserController extends Controller
 
     public function update($id)
     {
-        if(!(Auth::user()->level >= 1))
+        if(!(Auth::user()->level == 99))
         {
             exit('没有权限');
         }
@@ -53,6 +53,10 @@ class UserController extends Controller
         $pwd = Request::input('password','');
         $pwdRe = Request::input('password_re','');
         $level = Request::input('level','0');
+        if($level > 1)
+        {
+            $level = 1;
+        }
         if(empty($email) || $pwd !== $pwdRe)
         {
             echo "<script>alert('资料填写不正确')</script>";
@@ -80,7 +84,7 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        if(!(Auth::user()->level >= 1))
+        if(!(Auth::user()->level == 99))
         {
             exit('没有权限');
         }

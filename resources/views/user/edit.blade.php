@@ -66,7 +66,7 @@
                                             <label class="col-lg-2 control-label" for="level">角色</label>
                                             <div class="col-lg-4">
                                                 <select id="level" name="level" class="form-control">
-                                                    <option value="1" @if($userInfo->level==1) selected @endif>管理员</option>
+                                                    <option value="1" @if($userInfo->level==1) selected @endif>审核员</option>
                                                     <option value="0" @if($userInfo->level==0) selected @endif>访客</option>
                                                 </select>
                                             </div>
