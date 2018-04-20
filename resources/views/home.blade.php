@@ -116,9 +116,9 @@
                                                 <td>
                                                     <a href="/inviteInfo?area={{$val->area}}&phone={{$val->phone}}" target="_blank">邀请详情</a>
                                                     &nbsp;&nbsp;
-                                                    <a href="/check/pass?id={{$val->id}}" style="color: green">通过</a>
+                                                    <a href="/check/pass?id={{$val->id}}" style="color: green" id="tongguo_{{$val->id}}" onclick="chulizhong('tongguo_{{$val->id}}')">通过</a>
                                                     &nbsp;&nbsp;&nbsp;
-                                                    <a href="/check/miss?id={{$val->id}}" style="color: red">拒绝</a>
+                                                    <a href="/check/miss?id={{$val->id}}" style="color: red" id="meitongguo_{{$val->id}}" onclick="chulizhong('meitongguo_{{$val->id}}')">拒绝</a>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -154,10 +154,12 @@
             format: 'yyyy-mm-dd'
         });
     };
-        $('#shoudong').click(function(){
-            $('#shoudong').html('采集中，请稍等..');
-            $('#shoudong').attr("disabled", true); 
-        });
+        function chulizhong(ids)
+        {
+            var id = ids;
+            $('#'+id).html('处理中..');
+            $('#'+id).attr("disabled", true); 
+        }
     </script>
     </body>
 </html>

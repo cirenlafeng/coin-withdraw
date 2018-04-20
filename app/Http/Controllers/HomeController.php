@@ -39,4 +39,16 @@ class HomeController extends Controller
         $taskList = DB::table('task_list')->where($where)->orderBy('create_time')->orderBy('money','desc')->paginate(20);
         return view('home',['taskList'=>$taskList]);
     }
+
+    //审核通过
+    public function checkPass()
+    {
+
+    }
+
+    //审核拒绝
+    public function checkMiss()
+    {
+        
+    }
 }

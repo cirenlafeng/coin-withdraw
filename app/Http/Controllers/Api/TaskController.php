@@ -20,6 +20,7 @@ class TaskController extends Controller
 
         $postData = [];
         $postData['phone'] = Request::input('phone','');
+        $postData['uuid'] = Request::input('uuid','');
         $postData['area'] = Request::input('country_code','');
         $postData['money'] = Request::input('coin','');
         $postData['invited_num'] = Request::input('share_count','');
