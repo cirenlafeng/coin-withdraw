@@ -27,6 +27,10 @@ class TaskController extends Controller
         foreach ($postData as $key => $value) {
             if(empty($value))
             {
+                if($value == 0)
+                {
+                    continue;
+                }
                 return response()->json([
                     'status' => 502,
                     'data' => 'Missing parameters'
