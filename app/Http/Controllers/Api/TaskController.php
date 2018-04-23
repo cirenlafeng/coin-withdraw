@@ -27,7 +27,7 @@ class TaskController extends Controller
         foreach ($postData as $key => $value) {
             if(empty($value))
             {
-                if($value == 0)
+                if($value == 0 && null !== $value)
                 {
                     continue;
                 }
