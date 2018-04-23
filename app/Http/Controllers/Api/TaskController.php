@@ -27,13 +27,13 @@ class TaskController extends Controller
         foreach ($postData as $key => $value) {
             if(empty($value))
             {
-                if($value == 0 && null !== $value)
+                if($key == 'invited_num')
                 {
                     continue;
                 }
                 return response()->json([
                     'status' => 502,
-                    'data' => 'Missing parameters'
+                    'data' => 'Missing parameters:'.$key
                 ]);
             }
         }
