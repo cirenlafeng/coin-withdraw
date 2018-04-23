@@ -114,7 +114,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="/inviteInfo?area={{$val->area}}&phone={{$val->phone}}" target="_blank">邀请详情</a>
+                                                    <a href="/inviteInfo?id={{$val->id}}" target="_blank">邀请详情</a>
                                                     &nbsp;&nbsp;
                                                     <a href="/check/pass?id={{$val->id}}" style="color: green" id="tongguo_{{$val->id}}" onclick="chulizhong('tongguo_{{$val->id}}')">通过</a>
                                                     &nbsp;&nbsp;&nbsp;

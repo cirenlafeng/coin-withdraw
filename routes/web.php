@@ -20,5 +20,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/user','UserController');
     Route::get('/check/pass', 'HomeController@checkPass');
     Route::get('/check/miss', 'HomeController@checkMiss');
+    Route::get('/inviteInfo','HomeController@inviteInfo');
 });
 

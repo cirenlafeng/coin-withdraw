@@ -7,6 +7,7 @@ use DB;
 
 class HomeController extends Controller
 {
+    private $domain = 'http://up.kukuvideo.com';
     /**
      * Create a new controller instance.
      *
@@ -50,5 +51,24 @@ class HomeController extends Controller
     public function checkMiss()
     {
         
+    }
+
+    //邀请人信息
+    public function inviteInfo()
+    {
+        $id = Request::input('id','');
+        $order = DB::table('task_list')->where('id',$id)->first();
+        if(empty($order)) exit();
+        $url = $this->domain.'/api/apply/offline/'.$order->uuid;
+        $headers = array(
+            'user-token:140d7a33b5f31259d4d035dd3fb34b9118daf55'
+        );
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $data = curl_exec($curl);
+        curl_close($curl);
+        dd($data);
     }
 }
