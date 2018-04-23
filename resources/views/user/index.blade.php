@@ -39,6 +39,9 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="text-muted bootstrap-admin-box-title">用户</div>
+                                    <div class="text-muted bootstrap-admin-box-title" style="color: green;float: right;">
+                                    <a href="/user/create">注册新用户</a>
+                                    </div>
                                 </div>
                                 <div class="bootstrap-admin-panel-content">
                                     <table class="table table-striped">
