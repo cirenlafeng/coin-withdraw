@@ -23,6 +23,7 @@ class TaskController extends Controller
         $postData['uuid'] = Request::input('uuid','');
         $postData['area'] = Request::input('country_code','');
         $postData['money'] = Request::input('coin','');
+        $postData['order_number'] = Request::input('order_number','');
         $postData['invited_num'] = Request::input('share_count','');
         foreach ($postData as $key => $value) {
             if(empty($value))

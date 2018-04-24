@@ -114,11 +114,17 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="/inviteInfo?id={{$val->id}}" target="_blank">邀请详情</a>
+                                                    <a href="/inviteInfo?id={{$val->id}}&page=1" target="_blank">邀请详情</a>
                                                     &nbsp;&nbsp;
-                                                    <a href="/check/pass?id={{$val->id}}" style="color: green" id="tongguo_{{$val->id}}" onclick="chulizhong('tongguo_{{$val->id}}')">通过</a>
-                                                    &nbsp;&nbsp;&nbsp;
-                                                    <a href="/check/miss?id={{$val->id}}" style="color: red" id="meitongguo_{{$val->id}}" onclick="chulizhong('meitongguo_{{$val->id}}')">拒绝</a>
+<form style="margin:0px;display:inline;" action="/check/pass?id={{$val->id}}" method="post" id="pass_{{$val->id}}">
+    {{ csrf_field() }}
+<input type="submit" name="pass" value="通过" class="btn btn-sm btn-success" onclick="javascript:{document.pass_{{$val->id}}.submit();this.disabled=true;}">
+</form>
+&nbsp;&nbsp;
+<form style="margin:0px;display:inline;" action="/check/miss?id={{$val->id}}" method="post" id="miss_{{$val->id}}">
+    {{ csrf_field() }}
+<input type="submit" name="miss" value="拒绝" class="btn btn-sm btn-danger" onclick="javascript:{document.miss_{{$val->id}}.submit();this.disabled=true;}">
+</form>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -154,12 +160,9 @@
             format: 'yyyy-mm-dd'
         });
     };
-        function chulizhong(ids)
-        {
-            var id = ids;
-            $('#'+id).html('处理中..');
-            $('#'+id).attr("disabled", true); 
-        }
+        $('form').submit(function() {
+            $('input[type=submit]').attr('disabled', true);
+        });
     </script>
     </body>
 </html>
