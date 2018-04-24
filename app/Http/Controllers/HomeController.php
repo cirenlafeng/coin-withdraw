@@ -77,7 +77,19 @@ class HomeController extends Controller
             ));
             $response = curl_exec($curl);
             $response = json_decode($response,true);
-            dd($response);
+            if(isset($response['data']) && $response['data']['code'] == 1)
+            {
+                DB::table('task_list')->where('id',$id)->update(['status'=>1]);
+                return back()->with('statusTask', '列表ID :'.$id.' 提交成功！');
+            }else{
+                if(isset($response['data']))
+                {
+                    dd($response['data']);
+                }else{
+                    echo "任务处理异常，错误原因：<br>";
+                    dd($response);
+                }
+            }
         }
         if(empty($order)) exit("异常提交");
     }

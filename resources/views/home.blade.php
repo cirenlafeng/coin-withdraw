@@ -64,6 +64,11 @@
 </form>
 <br><br>
 </div>
+@if (session('statusTask'))
+    <div class="alert alert-success">
+        {{ session('statusTask') }}
+    </div>
+@endif
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -114,6 +119,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
+                                                    @if($val->status == '0')
                                                     <a href="/inviteInfo?id={{$val->id}}&page=1" target="_blank">邀请详情</a>
                                                     &nbsp;&nbsp;
 <form style="margin:0px;display:inline;" action="/check/pass?id={{$val->id}}" method="post" id="pass_{{$val->id}}">
@@ -125,6 +131,10 @@
     {{ csrf_field() }}
 <input type="submit" name="miss" value="拒绝" class="btn btn-sm btn-danger" onclick="javascript:{document.miss_{{$val->id}}.submit();this.disabled=true;}">
 </form>
+                                                    @endif
+                                                    @if($val->status != '0')
+                                                    已处理
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
