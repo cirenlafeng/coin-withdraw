@@ -80,7 +80,7 @@ class HomeController extends Controller
             if(isset($response['data']) && $response['data']['code'] == 1)
             {
                 DB::table('task_list')->where('id',$id)->update(['status'=>1]);
-                return back()->with('statusTask', '列表ID :'.$id.' 提交成功！');
+                return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
             }else{
                 if(isset($response['data']))
                 {
@@ -102,7 +102,44 @@ class HomeController extends Controller
         if(empty($order)) exit("异常提交");
         if($order->status == 0)
         {
-            
+            $post_data = array(
+                "api_key" => env('API_KEY'),
+                "coin" => $order->money,
+                "order_number" => $order->order_number,
+                "result_code" => -1,
+                "uuid" => $order->uuid,
+            );
+            $url = $this->domain.'/api/apply/verify';
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_HTTPHEADER => array(
+                    "cache-control: no-cache",
+                    "user-token: ".$this->userToken,
+                    ),
+                CURLOPT_POSTFIELDS => $post_data,
+            ));
+            $response = curl_exec($curl);
+            $response = json_decode($response,true);
+            if(isset($response['data']) && $response['data']['code'] == 1)
+            {
+                DB::table('task_list')->where('id',$id)->update(['status'=> -1]);
+                return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
+            }else{
+                if(isset($response['data']))
+                {
+                    dd($response['data']);
+                }else{
+                    echo "任务处理异常，错误原因：<br>";
+                    dd($response);
+                }
+            }
         }
         if(empty($order)) exit("异常提交");
     }
