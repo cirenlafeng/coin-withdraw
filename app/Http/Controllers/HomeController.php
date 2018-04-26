@@ -8,9 +8,14 @@ use DB;
 class HomeController extends Controller
 {
     //接口域名
-    private $domain = 'http://up.kukuvideo.com';
+    private $domain = env('CALLBACK_DOMAIN','');
 
+    //回调接口header头部信息
     private $userToken = '140d7a33b5f31259d4d035dd3fb34b9118daf551';
+
+    //交易平台
+    private $btcDomain = env('BTC_EXCHANGE_DOMAIN','');
+
     /**
      * Create a new controller instance.
      *

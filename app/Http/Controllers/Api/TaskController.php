@@ -25,6 +25,7 @@ class TaskController extends Controller
         $postData['money'] = Request::input('coin','');
         $postData['order_number'] = Request::input('order_number','');
         $postData['invited_num'] = Request::input('share_count','');
+        $postData['upexid'] = Request::input('upexid',0);
         foreach ($postData as $key => $value) {
             if(empty($value))
             {
