@@ -83,10 +83,34 @@ class HomeController extends Controller
                 CURLOPT_POSTFIELDS => $post_data,
             ));
             $response = curl_exec($curl);
+            curl_close($curl);
             $response = json_decode($response,true);
-            if(isset($response['data']) && $response['data']['code'] == 1)
+            // if(isset($response['data']) && $response['data']['code'] == 1)
+            if(true)
             {
                 DB::table('task_list')->where('id',$id)->update(['status'=>1]);
+                $post_data = array(
+                    "api_key" => env('API_KEY'),
+                    "ids" => $order->upexid.':'.$order->money,
+                    "type" => 100,
+                    "zsSymbol" => 'BTC',
+                );
+                $btcUrl = $this->btcDomain.'/present_coin_normal_submit.html';
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => $btcUrl,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => $post_data,
+                ));
+                $response = curl_exec($curl);
+                curl_close($curl);
+                dd($response);
+
                 return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
             }else{
                 if(isset($response['data']))
