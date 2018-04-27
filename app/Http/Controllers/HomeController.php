@@ -85,17 +85,16 @@ class HomeController extends Controller
             $response = curl_exec($curl);
             curl_close($curl);
             $response = json_decode($response,true);
-            // if(isset($response['data']) && $response['data']['code'] == 1)
-            if(true)
+            if(isset($response['data']) && $response['data']['code'] == 1)
             {
-                DB::table('task_list')->where('id',$id)->update(['status'=>1]);
+                
                 $post_data = array(
-                    "api_key" => env('API_KEY'),
-                    "ids" => $order->upexid.':'.$order->money,
+                    "api_key" => env('BTC_API_KEY',''),
+                    "ids" => $order->upexid.':'.rtrim(rtrim($order->money, '0'), '.'),
                     "type" => 100,
                     "zsSymbol" => 'BTC',
                 );
-                $btcUrl = $this->btcDomain.'/present_coin_normal_submit.html';
+                $btcUrl = $this->btcDomain.'/operate-onem-api/present_coin_normal_submit.html';
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $btcUrl,
@@ -109,9 +108,16 @@ class HomeController extends Controller
                 ));
                 $response = curl_exec($curl);
                 curl_close($curl);
-                dd($response);
-
-                return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
+                $response = json_decode($response,true);
+                if($response['code'] == 0)
+                {
+                    DB::table('task_list')->where('id',$id)->update(['status'=>1]);
+                    return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
+                }else{
+                    echo "任务处理异常，错误原因：<br>";
+                    dd($response);
+                }
+                
             }else{
                 if(isset($response['data']))
                 {
