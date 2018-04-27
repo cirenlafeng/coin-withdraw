@@ -47,12 +47,14 @@ class TaskController extends Controller
                 ]);
             }
         }
+        $postData['status'] = 0;
         $moneyCount = DB::table('task_list')->where(['phone'=>$postData['phone'],'area'=>$postData['area']])->sum('money');
         if( $moneyCount >= 0.00054 || $postData['invited_num'] > 5 || $postData['money'] >= 0.00054 )
         {
             $postData['check_type'] = 2;//人工审核
         }else{
             $postData['check_type'] = 1;//自动审核
+            $postData['status'] = 1;
             $post_data = array(
                 "api_key" => env('BTC_API_KEY',''),
                 "ids" => $postData['upexid'].':'.$postData['money'],
@@ -80,7 +82,6 @@ class TaskController extends Controller
                 dd($response);
             }
         }
-        $postData['status'] = 0;
         $postData['create_time'] = time();
         $postData['check_time'] = 0;
         if(DB::table('task_list')->insert($postData))
