@@ -13,6 +13,8 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->btcDomain = env('BTC_EXCHANGE_DOMAIN','');
+        error_reporting(-1);
+        ini_set('display_errors', 1);
     }
 
     public function index()
