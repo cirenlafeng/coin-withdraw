@@ -78,7 +78,7 @@ class TaskController extends Controller
             $response = curl_exec($curl);
             curl_close($curl);
             $response = json_decode($response,true);
-            @if(!isset($response['code']) || $response['code'] !== 0)
+            if(!isset($response['code']) || $response['code'] !== 0)
             {
                 echo "自动审核异常，错误原因：<br>";
                 dd($response);
