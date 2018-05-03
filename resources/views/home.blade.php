@@ -119,7 +119,9 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    @if($val->status == '0')
+                                                    @if(Auth::user()->level > 0)
+
+                                                        @if($val->status == '0')
                                                     <a href="/inviteInfo?id={{$val->id}}&page=1" target="_blank">邀请详情</a>
                                                     &nbsp;&nbsp;
 <form style="margin:0px;display:inline;" action="/check/pass?id={{$val->id}}" method="post" id="pass_{{$val->id}}">
@@ -131,9 +133,13 @@
     {{ csrf_field() }}
 <input type="submit" name="miss" value="拒绝" class="btn btn-sm btn-danger" onclick="javascript:{document.miss_{{$val->id}}.submit();this.disabled=true;}">
 </form>
-                                                    @endif
-                                                    @if($val->status != '0')
-                                                    已处理
+                                                        @endif
+
+                                                        @if($val->status != '0')
+                                                            已处理
+                                                        @endif
+                                                    @else
+                                                        访客无法操作
                                                     @endif
                                                 </td>
                                             </tr>

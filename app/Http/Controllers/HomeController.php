@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Request;
 use DB;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -54,6 +55,12 @@ class HomeController extends Controller
     //审核通过
     public function checkPass()
     {
+        if(!(Auth::user()->level > 0))
+        {
+            echo "<script>alert('没有权限')</script>";
+            echo "<script>history.go(-1)</script>";
+            exit();
+        }
         $id = Request::input('id','');
         $order = DB::table('task_list')->where('id',$id)->first();
         if(empty($order)) exit("异常提交");
@@ -134,6 +141,12 @@ class HomeController extends Controller
     //审核拒绝
     public function checkMiss()
     {
+        if(!(Auth::user()->level > 0))
+        {
+            echo "<script>alert('没有权限')</script>";
+            echo "<script>history.go(-1)</script>";
+            exit();
+        }
         $id = Request::input('id','');
         $order = DB::table('task_list')->where('id',$id)->first();
         if(empty($order)) exit("异常提交");
