@@ -80,8 +80,9 @@ class TaskController extends Controller
             $response = json_decode($response,true);
             if(!isset($response['code']) || $response['code'] !== 0)
             {
-                echo "自动审核异常，错误原因：<br>";
-                dd($response);
+                echo "error：<br>";
+                var_dump($response);
+                exit();
             }
         }
         $postData['create_time'] = time();
