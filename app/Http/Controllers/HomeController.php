@@ -118,7 +118,7 @@ class HomeController extends Controller
                 $response = json_decode($response,true);
                 if($response['code'] == 0)
                 {
-                    DB::table('task_list')->where('id',$id)->update(['status'=>1]);
+                    DB::table('task_list')->where('id',$id)->update(['status'=>1 ,'check_time'=>time()]);
                     return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
                 }else{
                     echo "任务处理异常，错误原因：<br>";
@@ -179,7 +179,7 @@ class HomeController extends Controller
             $response = json_decode($response,true);
             if(isset($response['data']) && $response['data']['code'] == 1)
             {
-                DB::table('task_list')->where('id',$id)->update(['status'=> -1]);
+                DB::table('task_list')->where('id',$id)->update(['status'=> -1 ,'check_time'=>time()]);
                 return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
             }else{
                 if(isset($response['data']))
