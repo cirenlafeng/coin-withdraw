@@ -63,7 +63,7 @@ class TaskController extends Controller
                 "type" => 100,
                 "zsSymbol" => 'BTC',
             );
-            $btcUrl = $this->btcDomain.'/operate-onem-api/present_coin_normal_submit.html';
+            $btcUrl = $this->btcDomain.'/present_coin_normal_submit.html';
             $curl = curl_init();
             curl_setopt_array($curl, array(
                 CURLOPT_URL => $btcUrl,
@@ -78,7 +78,7 @@ class TaskController extends Controller
             $response = curl_exec($curl);
             curl_close($curl);
             $response = json_decode($response,true);
-            if($response['code'] != 0)
+            if($response['code'] !== 0)
             {
                 echo "自动审核异常，错误原因：<br>";
                 dd($response);

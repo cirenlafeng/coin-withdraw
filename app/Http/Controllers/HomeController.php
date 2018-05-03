@@ -101,7 +101,7 @@ class HomeController extends Controller
                     "type" => 100,
                     "zsSymbol" => 'BTC',
                 );
-                $btcUrl = $this->btcDomain.'/operate-onem-api/present_coin_normal_submit.html';
+                $btcUrl = $this->btcDomain.'/present_coin_normal_submit.html';
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $btcUrl,
@@ -116,7 +116,7 @@ class HomeController extends Controller
                 $response = curl_exec($curl);
                 curl_close($curl);
                 $response = json_decode($response,true);
-                if($response['code'] == 0)
+                if($response['code'] === 0)
                 {
                     DB::table('task_list')->where('id',$id)->update(['status'=>1 ,'check_time'=>time()]);
                     return back()->with('statusTask', '列表ID :'.$id.' 处理成功！');
