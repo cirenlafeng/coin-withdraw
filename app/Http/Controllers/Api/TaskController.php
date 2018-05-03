@@ -59,7 +59,7 @@ class TaskController extends Controller
             $postData['status'] = 1;
             $post_data = array(
                 "api_key" => env('BTC_API_KEY',''),
-                "ids" => $postData['upexid'].':'.$postData['money'],
+                "ids" => $postData['upexid'].':'.rtrim(rtrim($postData['money'], '0'), '.'),
                 "type" => 100,
                 "zsSymbol" => 'BTC',
             );
