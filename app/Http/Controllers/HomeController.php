@@ -48,7 +48,10 @@ class HomeController extends Controller
             $where['status'] = $status;
         }
 
-        $taskList = DB::table('task_list')->where($where)->orderBy('create_time')->orderBy('money','desc')->paginate(20);
+        $taskList = DB::table('task_list')->where($where)
+        ->orderByRaw(DB::raw("FIELD(`status`, 0, -1, 1)"))
+        ->orderBy('create_time','asc')->orderBy('money','desc')
+        ->paginate(20);
         return view('home',['taskList'=>$taskList]);
     }
 

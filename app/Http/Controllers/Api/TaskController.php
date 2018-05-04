@@ -86,7 +86,7 @@ class TaskController extends Controller
             }
         }
         $postData['create_time'] = time();
-        $postData['check_time'] = 0;
+        $postData['check_time'] = time();
         if(DB::table('task_list')->insert($postData))
         {
             return response()->json([
